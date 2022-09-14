@@ -4,7 +4,7 @@ input_size: 32
 gt_size: 128
 ch_size: 3
 scale: 4
-sub_name: 'esrgan'
+sub_name: 'Checkpointsesrgan'
 pretrain_name: 'psnr_pretrain'
 
 # generator setting
@@ -18,7 +18,7 @@ network_D:
 # dataset setting
 train_dataset:
     path: './data/DIV2K800_sub_bin.tfrecord'
-    num_samples: 32208
+    num_samples: 10000
     using_bin: True
     using_flip: True
     using_rot: True

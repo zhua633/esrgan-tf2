@@ -49,20 +49,20 @@ def main(_argv):
         raw_img = cv2.imread(FLAGS.img_path)
         lr_img, hr_img = create_lr_hr_pair(raw_img, cfg['scale'])
 
-        sr_img = tensor2img(model(lr_img[np.newaxis, :] / 255))
+        sr_img = tensor2img(model(raw_img[np.newaxis, :] / 255))
         bic_img = imresize_np(lr_img, cfg['scale']).astype(np.uint8)
 
         str_format = "[{}] PSNR/SSIM: Bic={:.2f}db/{:.2f}, SR={:.2f}db/{:.2f}"
-        print(str_format.format(
-            os.path.basename(FLAGS.img_path),
-            calculate_psnr(rgb2ycbcr(bic_img), rgb2ycbcr(hr_img)),
-            calculate_ssim(rgb2ycbcr(bic_img), rgb2ycbcr(hr_img)),
-            calculate_psnr(rgb2ycbcr(sr_img), rgb2ycbcr(hr_img)),
-            calculate_ssim(rgb2ycbcr(sr_img), rgb2ycbcr(hr_img))))
+        # print(str_format.format(
+        #     os.path.basename(FLAGS.img_path),
+        #     calculate_psnr(rgb2ycbcr(bic_img), rgb2ycbcr(hr_img)),
+        #     calculate_ssim(rgb2ycbcr(bic_img), rgb2ycbcr(hr_img)),
+        #     calculate_psnr(rgb2ycbcr(sr_img), rgb2ycbcr(hr_img)),
+        #     calculate_ssim(rgb2ycbcr(sr_img), rgb2ycbcr(hr_img))))
         result_img_path = './Bic_SR_HR_' + os.path.basename(FLAGS.img_path)
         print("[*] write the result image {}".format(result_img_path))
-        results_img = np.concatenate((bic_img, sr_img, hr_img), 1)
-        cv2.imwrite(result_img_path, results_img)
+        # results_img = np.concatenate((bic_img, sr_img, hr_img), 1)
+        cv2.imwrite(result_img_path,sr_img)
     else:
         print("[*] Processing on Set5 and Set14, and write results")
         results_path = './results/' + cfg['sub_name'] + '/'
